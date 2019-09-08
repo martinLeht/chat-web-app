@@ -6,10 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-section.component.css']
 })
 export class MainSectionComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
   }
 
 }

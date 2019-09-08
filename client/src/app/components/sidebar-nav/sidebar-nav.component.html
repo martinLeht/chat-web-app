@@ -1,7 +1,45 @@
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-        <li><a>Friends</a></li>
-        <li><a>Rooms</a></li>
-        <li><a>Open Lobby</a></li>
-    </ul>
-</div>
+<mat-list>
+
+    <mat-list-item>
+            <mat-icon mat-listicon>account_circle</mat-icon>
+            <h4 mat-line>
+                <a routerLink="/profile" (click)="handleClickMenu($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Profile</a>
+            </h4>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+            <mat-icon mat-listicon>dashboard</mat-icon>
+            <h4 mat-line>
+                <a routerLink="/" (click)="handleClickMenu($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+            </h4>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+        <mat-icon mat-listicon>people_alt</mat-icon>
+        <h4 mat-line>
+            <a routerLink="/friends" (click)="handleClickMenu($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Friends</a>
+        </h4>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+        <mat-icon mat-listicon>group</mat-icon>
+        <h4 mat-line>
+            <a routerLink="/groups" (click)="handleClickMenu($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Groups</a>
+        </h4>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+        <mat-icon mat-listicon>group_add</mat-icon>
+        <h4 mat-line>
+            <a routerLink="/add" (click)="handleClickMenu($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add</a>
+        </h4>
+    </mat-list-item>
+</mat-list>

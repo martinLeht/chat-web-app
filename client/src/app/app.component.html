@@ -1,10 +1,16 @@
+<!-- Top toolbar -->
+<app-topbar [sidenav]="sidenav"></app-topbar>
 
-<!-- sidebar -->
-<sidebar-nav></sidebar-nav>
+<mat-sidenav-container>
+    <!-- sidebar -->
+    <mat-sidenav #sidenav mode="{{sidenavMode}}" opened="{{sidenavOpened}}">
+        <sidebar-nav [sidenav]="sidenav"></sidebar-nav>
+    </mat-sidenav>
+
+    <!-- main content -->
+    <section class="main-content">
+        <router-outlet></router-outlet>
+    </section>
+</mat-sidenav-container>
 
 
-<!-- main content -->
-<main-section></main-section>
-
-
-<router-outlet></router-outlet>
