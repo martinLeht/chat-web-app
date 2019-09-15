@@ -10,24 +10,32 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule, MatInputModule, MatOptionModule, MatSelectModule, } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
-import { FriendsComponentComponent } from './components/friends-component/friends-component.component';
-import { GroupsComponentComponent } from './components/groups-component/groups-component.component';
-import { AddComponentComponent } from './components/add-component/add-component.component';
-import { DashboardComponentComponent } from './components/dashboard-component/dashboard-component.component';
-import { ProfileComponentComponent } from './components/profile-component/profile-component.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FriendsComponent } from './components/friends/friends.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { ExploreComponent } from './components/explore/explore.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ChatWindowComponent } from './components/chat-window/chat-window.component';
+import { UsersOnlineComponent } from './components/users-online/users-online.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarNavComponent,
     TopbarComponent,
-    FriendsComponentComponent,
-    GroupsComponentComponent,
-    AddComponentComponent,
-    DashboardComponentComponent,
-    ProfileComponentComponent
+    DashboardComponent,
+    FriendsComponent,
+    GroupsComponent,
+    ExploreComponent,
+    ProfileComponent,
+    ChatWindowComponent,
+    UsersOnlineComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +46,15 @@ import { ProfileComponentComponent } from './components/profile-component/profil
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    MatOptionModule, 
+    MatSelectModule,
+    MatCardModule,
+    MatGridListModule,
+    MatTabsModule,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

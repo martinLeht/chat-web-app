@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProfileComponent } from './components/profile-component/profile-component.component';
-import { DashboardComponent } from './components/dashboard-component/dashboard-component.component';
-import { FriendsComponent } from './components/friends-component/friends-component.component';
-import { GroupsComponent } from './components/groups-component/groups-component.component';
-import { AddComponent } from './components/add-component/add-component.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FriendsComponent } from './components/friends/friends.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { ExploreComponent } from './components/explore/explore.component';
 
 
 const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: '', component: DashboardComponent},
-  {path: 'frineds', component: FriendsComponent},
+  {path: 'friends', component: FriendsComponent},
   {path: 'groups', component: GroupsComponent},
-  {path: 'add', component: AddComponent}
+  {path: 'explore', component: ExploreComponent}
 ];
 
 @NgModule({

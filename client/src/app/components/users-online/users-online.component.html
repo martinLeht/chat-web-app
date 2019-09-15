@@ -1,0 +1,47 @@
+<mat-tab-group>
+    <mat-tab label="Friends">
+        <mat-card class="users-card">
+            <mat-card-title class="users-card-title">Friends Online</mat-card-title>
+            <mat-card-content class="users-card-content">
+                <mat-nav-list>
+                    <mat-list-item *ngFor="let user of getUsers()">
+                        <a matLine href="...">{{ user }}</a>
+                        <button mat-icon-button (click)="showDetails(user)">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-nav-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Groups"> 
+        <mat-card class="users-card">
+            <mat-card-title class="users-card-title">Groups Chats</mat-card-title>
+            <mat-card-content class="users-card-content">
+                <mat-nav-list>
+                    <mat-list-item *ngFor="let user of getUsers()">
+                        <a matLine href="...">{{ user }}</a>
+                        <button mat-icon-button (click)="showDetails(user)">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-nav-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Global Users">
+        <mat-card class="users-card">
+            <mat-card-title class="users-card-title">Global Users Online</mat-card-title>
+            <mat-card-content class="users-card-content">
+                <mat-nav-list>
+                    <mat-list-item *ngFor="let user of getUsers()">
+                        <a matLine href="...">{{ user }}</a>
+                        <button mat-icon-button (click)="showDetails(user)">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-nav-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+</mat-tab-group>
