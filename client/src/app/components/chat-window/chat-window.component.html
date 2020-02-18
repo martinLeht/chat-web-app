@@ -1,17 +1,28 @@
 <mat-card class="chat-card">
     <mat-card-title class="chat-card-title">Chat</mat-card-title>
     <mat-card-content class="chat-card-content">
-        <mat-card class="chat-window">
-            <mat-card-content class="chat-window-content">
+        <mat-card class="chat-messages-window">
+            <h2 *ngIf="!isChatting" id="no-chat">No one to chat with</h2>
+            <mat-card-content *ngFor="let message of messages" class="chat-messages-content">
+                <div *ngIf="isChatting" [className]="loggedUser == message.user ? 'my-message' : 'incoming-message'">
+                    <h5 id="message-sender">{{message.user}} (sent {{message.time}})</h5>
+                    <br>
+                    <p id="message-content">
+                        {{message.message}}
+                    </p>    
+                    <br>
+                </div>
+                <br>
             </mat-card-content>
         </mat-card>
-        <div class="chat-container">            
-            <mat-form-field>
-                <textarea disabled="false" matInput placeholder="Send a message"></textarea>
+
+        <div class="chat-input-group">   
+            <mat-form-field class="message-input">
+                <textarea matInput placeholder="Send a message"></textarea>
             </mat-form-field>
-            <button disabled="false" mat-stroked-button color="primary">
-                    <mat-icon>send</mat-icon>
-            </button>
+            <button (click)="sendMessage()" class="send-button" mat-stroked-button color="primary">
+                <mat-icon>send</mat-icon>
+            </button>    
         </div>
     </mat-card-content>
 </mat-card>
