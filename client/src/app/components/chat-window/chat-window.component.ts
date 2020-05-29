@@ -8,7 +8,7 @@ import {NgForm} from '@angular/forms';
 })
 export class ChatWindowComponent implements OnInit {
 
-  private messages: Array<object>;
+  messages: Array<object>;
   isChatting = true;
   loggedUser = "Saitama";
 
