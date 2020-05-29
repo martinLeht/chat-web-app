@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-chat-window',
@@ -58,11 +59,22 @@ export class ChatWindowComponent implements OnInit {
     return this.messages
   }
 
+  /*
   sendMessage() {
     this.messages.push(
       {
         "user": "Saitama",
         "message": "UFFF new MEssage man.",
+        "time": new Date().toLocaleDateString()
+      }
+    ) 
+  }
+  */
+  onSubmit(msg: NgForm) {
+    this.messages.push(
+      {
+        "user": "Saitama",
+        "message": msg.value.text,
         "time": new Date().toLocaleDateString()
       }
     ) 

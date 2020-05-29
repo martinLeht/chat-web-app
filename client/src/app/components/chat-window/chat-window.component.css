@@ -21,61 +21,77 @@
 
 .chat-messages-window {
     margin-bottom: 30px;
-    max-height: 500px;
+    max-height: 450px;
     overflow-y: scroll;
 }
 
 .chat-messages-window h2 {
-    text-align: center;
     color: rgb(152,152,152);
 }
 
 .my-message {
-    float: right;
-    width: 80%;
-    padding-right: 20px;
-    padding-left: 20px;
+    clear: both; 
+    float: right; 
+    display: block; 
+    position: relative;
+    width: auto;
+    max-width: 80%;
+    padding-right: 10px;
+    padding-left: 10px;
     background-color: rgba(147, 56, 95, 0.7);
     border-radius: 20px;
     margin-bottom: 5px;
 }
 
 .my-message #message-sender {
-    float: right;
-    height: auto;
+    clear: both; 
+    float: right; 
+    display: block;
+    position: relative;
+    height: 5px;
     max-width: 400px;
     word-break: break-all;
+    margin-bottom: 0px;
 }
 
 .my-message #message-content {
-    float: right;
+    clear: both; 
+    float: right; 
+    display: block; 
+    position: relative;
     height: auto;
-    margin-top: -10px;
     max-width: 400px;
     word-break: break-all;
 }
 
 .incoming-message {
-    float: left;
-    width: 80%;
-    padding-right: 20px;
-    padding-left: 20px;
+    clear: both; 
+    float: left; 
+    display: block; 
+    position: relative;
+    width: auto;
+    max-width: 80%;
+    padding-right: 10px;
+    padding-left: 10px;
     background-color: rgba(159, 107, 153, 0.7);
     border-radius: 20px;
     margin-bottom: 5px;
 }
 
 .incoming-message #message-sender {
-    float: left;
-    height: auto;
+    clear: both; 
+    float: left; 
+    display: block; 
+    position: relative;
+    height: 5px;
     max-width: 400px;
     word-break: break-all;
+    margin-bottom: 0px;
 }
 
 .incoming-message #message-content {
-    float: left;
+    clear: both; float: left; display: block; position: relative;
     height: auto;
-    margin-top: -10px;
     max-width: 400px;
     word-break: break-all;
 }
