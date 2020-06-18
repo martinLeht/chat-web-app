@@ -10,10 +10,10 @@ export default class UserRoutes {
         this.userController = new UserController();
         this.router = express.Router();
 
-        this.setRoutes();
+        this.registerRoutes();
     }
 
-    private setRoutes(): void {
+    private registerRoutes(): void {
         this.router.get('/users', async (req: Request, res: Response) => this.userController.findAll(req, res));
         this.router.get('/users/:id', async (req: Request, res: Response) => this.userController.findById(req, res));
         this.router.post('/users', async (req: Request, res: Response) => this.userController.create(req, res));
