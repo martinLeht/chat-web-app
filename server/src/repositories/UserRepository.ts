@@ -1,15 +1,19 @@
 import { IReadWrite } from "./interfaces/IReadWrite";
-import { Model, Document } from "mongoose";
 import User from "../models/User";
 import { IUser } from "../models/interfaces/IUser";
 
 export default class UserRepository implements IReadWrite<IUser> {
-    
-    //we created constructor with arguments to manipulate mongodb operations
+   
     constructor() {
         
     }
     
+    /**
+     * Method to fetch all users
+     * 
+     * @return
+     *      IUser[] | undefined all users from db
+     */
     async findAll(): Promise<IUser[] | undefined> {
         try {
             console.log("Finding users...");
@@ -20,12 +24,21 @@ export default class UserRepository implements IReadWrite<IUser> {
             console.log(users);
             return users;  
         } catch(Error) {
-            console.log("ERROR ON CREATION");
+            console.log("ERROR ON findAll");
             console.log(Error.message);
             return undefined;
         }
     }
 
+    /**
+     * Method to fetch user by id
+     * 
+     * @param {number} id
+     *      id of the user to be fetched
+     * 
+     * @return
+     *      IUser | undefined that matches the provided id
+     */
     async findOneById(id: number): Promise<IUser | undefined> {
         try {
             console.log("Finding user by id...");
@@ -36,12 +49,21 @@ export default class UserRepository implements IReadWrite<IUser> {
             console.log(user);
             return user;  
         } catch(Error) {
-            console.log("ERROR ON CREATION");
+            console.log("ERROR ON findOneById");
             console.log(Error.message);
             return undefined;
         }
     } 
 
+    /**
+     * Method to fetch user by email
+     * 
+     * @param {string} email
+     *      email of the user to be fetched
+     * 
+     * @return
+     *      IUser | undefined that matches the provided email
+     */
     async findOneByEmail(email: string): Promise<IUser | undefined> {
         try {
             console.log("Finding user by email...");
@@ -52,12 +74,22 @@ export default class UserRepository implements IReadWrite<IUser> {
             console.log(user);
             return user;  
         } catch(Error) {
-            console.log("ERROR ON CREATION");
+            console.log("ERROR ON findOneByEmail");
             console.log(Error.message);
             return undefined;
         }
     } 
 
+
+    /**
+     * Method to fetch user by username
+     * 
+     * @param {string} username
+     *      Username of the user to be fetched
+     * 
+     * @return
+     *      IUser | undefined that matches the provided username
+     */
     async findOneByUsername(username: string): Promise<IUser | undefined> {
         try {
             console.log("Finding user by username...");
@@ -68,37 +100,61 @@ export default class UserRepository implements IReadWrite<IUser> {
             console.log(user);
             return user;  
         } catch(Error) {
-            console.log("ERROR ON CREATION");
+            console.log("ERROR ON findOneByUsername");
             console.log(Error.message);
             return undefined;
         }
     }
 
-    // we add to method, the async keyword to manipulate the insert result
-    // of method.
+    /**
+     * Method to create a user
+     * 
+     * @param {IUser} user
+     *     IUser instance to be inserted in db
+     * 
+     * @return
+     *      A boolean flag, if the creation was successfull or not
+     */
     async create(user: IUser): Promise<boolean> {
-        console.log("Creating a document...");
-        const result: IUser = await User.create(user);
+        try {
+            console.log("Creating a document...");
+            const newUser: IUser = await User.create(user);
         
-        if (result)
-        console.log(result);
-        return true;
+            if (newUser === undefined) {
+                console.log("Something went wrong on creation...");
+                return false;
+            }
+            console.log("Successfully created user:");
+            console.log(newUser);
+            return true;
+        } catch(Error) {
+            console.log("ERROR ON findOneByUsername");
+            console.log(Error.message);
+            return false;
+        }        
     }
 
+    /**
+     * Method to update a user entry
+     * 
+     * @param {number} id
+     *      Id of the user to be deleted
+     * @param {any} userData
+     *      Data to be updated for a specific user entry
+     * 
+     * @return
+     *      A boolean flag, if the update was successfull or not
+     */
     async update(id: number, userData: any): Promise<boolean> {
         try {
             console.log("Creating a document...");
-            const user: IUser | null = await User.findOne({ "userId": id}).exec();
-        
+            const user: IUser | null = await User.findOneAndUpdate({ "userId": id}, userData).exec();
             if (user === null) {
                 console.log("No user found with id " + id);
                 return false;
             }
-            console.log("Found user:");
+            console.log("Successfully updated user:");
             console.log(user);
-            userData.
-            user.save();
-            
             return true;
         } catch(Error) {
             console.log("ERROR ON CREATION");
@@ -106,8 +162,32 @@ export default class UserRepository implements IReadWrite<IUser> {
             return false;
         }
     }
+
+    /**
+     * Method to delete user entry
+     * 
+     * @param {number} id
+     *      Id of the user to be deleted
+     * 
+     * @return
+     *      A boolean flag, if deletion was successfull or not
+     */
     async delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+        try {
+            const user: IUser | null = await User.findOneAndDelete({ "userId": id}).exec();
+            if (user === null) {
+                console.log("No user found with id " + id);
+                return false;
+            }
+            console.log("Successfully deleted user:");
+            console.log(user);
+            return true;
+
+        } catch(Error) {
+            console.log("ERROR ON CREATION");
+            console.log(Error.message);
+            return false;
+        }
     }
 
 }
