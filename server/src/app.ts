@@ -5,19 +5,16 @@ import cors from "cors";
 
 
 import UserRoutes from './routes/UserRoutes';
+import { Inject } from 'typescript-ioc';
 
 
 export default class App {
 
     private app: Application;
     private server: Server;
-    
-    private userRoutes: UserRoutes;
 
-    constructor() {
+    constructor(@Inject private userRoutes: UserRoutes) {
         this.app = express();
-
-        this.userRoutes = new UserRoutes();
 
         this.initMiddlewares();
         this.initRoutes();

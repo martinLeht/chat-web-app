@@ -1,12 +1,11 @@
 import { IReadWrite } from "./interfaces/IReadWrite";
 import User from "../models/User";
 import { IUser } from "../models/interfaces/IUser";
+import { Singleton } from "typescript-ioc";
+import { UserDTO } from "../dto/UserDTO";
 
+@Singleton
 export default class UserRepository implements IReadWrite<IUser> {
-   
-    constructor() {
-        
-    }
     
     /**
      * Method to fetch all users
@@ -14,19 +13,19 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      IUser[] | undefined all users from db
      */
-    async findAll(): Promise<IUser[] | undefined> {
+    async findAll(): Promise<IUser[]> {
         try {
             console.log("Finding users...");
             const users: IUser[] = await User.find().exec();
             
-            if (users.length === 0) return undefined;
+            if (users.length === 0) return [];
 
             console.log(users);
             return users;  
         } catch(Error) {
             console.log("ERROR ON findAll");
             console.log(Error.message);
-            return undefined;
+            return [];
         }
     }
 
