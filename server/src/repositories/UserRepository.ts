@@ -13,7 +13,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      IUser[] | undefined all users from db
      */
-    async findAll(): Promise<IUser[]> {
+    public async findAll(): Promise<IUser[]> {
         try {
             console.log("Finding users...");
             const users: IUser[] = await User.find().exec();
@@ -38,7 +38,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      IUser | undefined that matches the provided id
      */
-    async findOneById(id: number): Promise<IUser | undefined> {
+    public async findOneById(id: number): Promise<IUser | undefined> {
         try {
             console.log("Finding user by id...");
             const user: IUser | null = await User.findOne({ "userId": id }).exec();
@@ -63,7 +63,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      IUser | undefined that matches the provided email
      */
-    async findOneByEmail(email: string): Promise<IUser | undefined> {
+    public async findOneByEmail(email: string): Promise<IUser | undefined> {
         try {
             console.log("Finding user by email...");
             const user: IUser | null = await User.findOne({ "email": email }).exec();
@@ -89,7 +89,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      IUser | undefined that matches the provided username
      */
-    async findOneByUsername(username: string): Promise<IUser | undefined> {
+    public async findOneByUsername(username: string): Promise<IUser | undefined> {
         try {
             console.log("Finding user by username...");
             const user: IUser | null = await User.findOne({ "username": username }).exec();
@@ -114,7 +114,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      A boolean flag, if the creation was successfull or not
      */
-    async create(user: IUser): Promise<boolean> {
+    public async create(user: IUser): Promise<boolean> {
         try {
             console.log("Creating a document...");
             const newUser: IUser = await User.create(user);
@@ -144,7 +144,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      A boolean flag, if the update was successfull or not
      */
-    async update(id: number, userData: any): Promise<boolean> {
+    public async update(id: number, userData: any): Promise<boolean> {
         try {
             console.log("Creating a document...");
             const user: IUser | null = await User.findOneAndUpdate({ "userId": id}, userData).exec();
@@ -171,7 +171,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      A boolean flag, if deletion was successfull or not
      */
-    async delete(id: number): Promise<boolean> {
+    public async delete(id: number): Promise<boolean> {
         try {
             const user: IUser | null = await User.findOneAndDelete({ "userId": id}).exec();
             if (user === null) {

@@ -1,3 +1,7 @@
+mat-list-item h4 {
+    text-decoration: none;
+}
+
 mat-sidenav {
     width: 150px;
 }

@@ -65,7 +65,7 @@ export default class UserService {
             return { err: "There is a user with the provided username already."};
         }
 
-        const newUser: IUser = this.toPersistence(userDto);
+        const newUser: IUser = this.toEntity(userDto);
         const success: boolean = await this.userRepository.create(newUser);
 
         if (!success) {
@@ -106,13 +106,13 @@ export default class UserService {
         return userDto;
     }
 
-    private toPersistence(user: UserDTO): IUser {
-        const userModel: IUser = new User({
-            username: user.username,
-            email: user.email,
-            password: user.password
+    private toEntity(userDto: UserDTO): IUser {
+        const user: IUser = new User({
+            username: userDto.username,
+            email: userDto.email,
+            password: userDto.password
         });
 
-        return userModel;
+        return user;
     }
 }

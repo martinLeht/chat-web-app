@@ -1,11 +1,11 @@
 import express, { Application } from 'express';
+const expressSanitizer = require('express-sanitizer');
 import http, { Server } from 'http';
 import helmet from 'helmet';
 import cors from "cors";
-
+import { Inject } from 'typescript-ioc';
 
 import UserRoutes from './routes/UserRoutes';
-import { Inject } from 'typescript-ioc';
 
 
 export default class App {
@@ -23,6 +23,7 @@ export default class App {
     }
 
     private initMiddlewares(): void {
+        this.app.use(expressSanitizer);
         this.app.use(cors());
         this.app.use(helmet());
     }

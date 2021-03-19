@@ -4,7 +4,7 @@ import { Inject } from "typescript-ioc";
 
 export default class UserRoutes {
 
-    router: Router;
+    public router: Router;
 
     constructor(@Inject private userController: UserController) {
         this.router = express.Router();

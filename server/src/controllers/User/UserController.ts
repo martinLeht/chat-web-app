@@ -1,18 +1,18 @@
 import { CrudController } from "../CrudController";
 import { Request, Response } from "express";
 import { Inject } from "typescript-ioc";
-import UserRepository from "../../repositories/UserRepository";
 import { IUser } from "../../models/interfaces/IUser";
 import { UserDTO } from "../../dto/UserDTO";
+import UserService from "../../services/UserService";
 
 export default class UserController extends CrudController {
 
-    constructor(@Inject private userRepository: UserRepository) {
+    constructor(@Inject private userService: UserService) {
         super();
     }
     
     public async findAll(req: Request, res: Response): Promise<void> {
-        const users: IUser[] | undefined = await this.userRepository.findAll();
+        const users: UserDTO[] | undefined = await this.userService.findAllUsers();
 
         if (users === undefined) {
             res.json({
@@ -26,7 +26,7 @@ export default class UserController extends CrudController {
     
     public async findById(req: Request, res: Response): Promise<void> {
         const id: number = parseInt(req.params.id);
-        const user: IUser | undefined = await this.userRepository.findOneById(id);
+        const user: UserDTO | undefined = await this.userService.findUserById(id);
 
         if (user === undefined) {
             res.json({
@@ -64,7 +64,7 @@ export default class UserController extends CrudController {
         };
 
 
-        const success: boolean = await this.userRepository.create(userDto);
+        const success: boolean = await this.userService.createUser(userDto);
 
         if (!success) {
             res.json({
@@ -77,6 +77,9 @@ export default class UserController extends CrudController {
     }
 
     public async update(req: Request, res: Response): Promise<void> {
+
+        const userData: UserDTO = req.body
+
         res.json({
             err: "update Method not implemented."
         });
