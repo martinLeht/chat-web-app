@@ -1,22 +1,27 @@
-import express, { Request, Response, Router } from "express";
+import { Request, Response, Router } from "express";
+import asyncHandler from 'express-async-handler';
+import { injectable, inject } from "inversify";
+import TYPES from "../config/types";
 import UserController from '../controllers/User/UserController';
-import { Inject } from "typescript-ioc";
+import IRoutes from "./interfaces/IRoutes";
 
-export default class UserRoutes {
+@injectable()
+class UserRoutes implements IRoutes {
 
-    public router: Router;
+    private userController: UserController;
 
-    constructor(@Inject private userController: UserController) {
-        this.router = express.Router();
-        this.registerRoutes();
+    constructor(@inject(TYPES.UserController) userController: UserController) {
+        this.userController = userController;
     }
 
-    private registerRoutes(): void {
-        this.router.get('/users', async (req: Request, res: Response) => await this.userController.findAll(req, res));
-        this.router.get('/users/:id', async (req: Request, res: Response) => await this.userController.findById(req, res));
-        this.router.post('/users', async (req: Request, res: Response) => await this.userController.create(req, res));
-        this.router.put('/users/:id', async (req: Request, res: Response) => await this.userController.update(req, res));
-        this.router.delete('/users/:id', async (req: Request, res: Response) => await this.userController.delete(req, res));
+    public registerRoutes(router: Router): void {
+        router.get('/test', (req: Request, res: Response) => this.userController.findTest(req, res));
+        router.get('/users', asyncHandler(async (req: Request, res: Response) => await this.userController.findAll(req, res)));
+        router.get('/users/:id', asyncHandler(async (req: Request, res: Response) => await this.userController.findById(req, res)));
+        router.post('/users', asyncHandler(async (req: Request, res: Response) => await this.userController.create(req, res)));
+        router.put('/users/:id', asyncHandler(async (req: Request, res: Response) => await this.userController.update(req, res)));
+        router.delete('/users/:id', asyncHandler(async (req: Request, res: Response) => await this.userController.delete(req, res)));
     }
-
 }
+
+export default UserRoutes;

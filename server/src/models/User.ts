@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IUser} from './interfaces/IUser';
+import IUser from './interfaces/IUser';
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 // Mongo ODM to mapp to database

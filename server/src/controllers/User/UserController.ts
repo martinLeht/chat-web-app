@@ -1,15 +1,27 @@
+import { injectable, inject } from "inversify";
+import TYPES from "../../config/types";
 import { CrudController } from "../CrudController";
 import { Request, Response } from "express";
-import { Inject } from "typescript-ioc";
-import { IUser } from "../../models/interfaces/IUser";
+import IUser from "../../models/interfaces/IUser";
 import { UserDTO } from "../../dto/UserDTO";
-import UserService from "../../services/UserService";
+import IUserService from "../../services/interfaces/IUserService";
 
+
+@injectable()
 export default class UserController extends CrudController {
 
-    constructor(@Inject private userService: UserService) {
+    private userService: IUserService;
+
+    constructor(@inject(TYPES.IUserService) userService: IUserService) {
         super();
+        this.userService = userService;
     }
+
+    public findTest(req: Request, res: Response): void {
+        res.json({
+            err: "No users found"
+        });
+    }    
     
     public async findAll(req: Request, res: Response): Promise<void> {
         const users: UserDTO[] | undefined = await this.userService.findAllUsers();

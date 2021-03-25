@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { injectable } from "inversify";
 
+@injectable()
 export abstract class CrudController {
 
     public abstract findAll(req: Request, res: Response): void;

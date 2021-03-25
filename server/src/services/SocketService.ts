@@ -2,24 +2,25 @@ import * as socketio from 'socket.io';
 import { Server } from 'http';
 import { Socket } from 'dgram';
 
-export default class SocketService {
+class SocketService {
 
     private io: any;
 
     constructor(server: Server) {
         this.io = socketio.listen(server);
 
-        this.setupSocketConfig();
+        //this.setupSocketConfig();
     }
 
+    /*
     private setupSocketConfig(): void {
         /* 'connection' is a socket.io event that is triggered when a new connection is 
        made. Once a connection is made, callback is called. */
-        this.io.sockets.on('connection', (socket: Socket) => { /* socket object allows us to join specific clients 
+    /*    this.io.sockets.on('connection', (socket: Socket) => { /* socket object allows us to join specific clients 
             to chat rooms and also to catch
             and emit the events.*/
             // 'join event'
-            socket.on('join', (data: any) => {          
+    /*        socket.on('join', (data: any) => {          
                 socket.join(data.room);
                 chatRooms.find({}).toArray((err, rooms) => {
                     if(err){
@@ -58,5 +59,7 @@ export default class SocketService {
         });
 
     }
-
+    */
 }
+
+export default SocketService;

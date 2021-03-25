@@ -1,11 +1,11 @@
-import { IReadWrite } from "./interfaces/IReadWrite";
+import { injectable } from "inversify";
+import IUserRepository from "./interfaces/IUserRepository";
 import User from "../models/User";
-import { IUser } from "../models/interfaces/IUser";
-import { Singleton } from "typescript-ioc";
+import IUser from "../models/interfaces/IUser";
 import { UserDTO } from "../dto/UserDTO";
 
-@Singleton
-export default class UserRepository implements IReadWrite<IUser> {
+@injectable()
+class UserRepository implements IUserRepository {
     
     /**
      * Method to fetch all users
@@ -144,7 +144,7 @@ export default class UserRepository implements IReadWrite<IUser> {
      * @return
      *      A boolean flag, if the update was successfull or not
      */
-    public async update(id: number, userData: any): Promise<boolean> {
+    public async update(id: number, userData: IUser): Promise<boolean> {
         try {
             console.log("Creating a document...");
             const user: IUser | null = await User.findOneAndUpdate({ "userId": id}, userData).exec();
@@ -190,3 +190,5 @@ export default class UserRepository implements IReadWrite<IUser> {
     }
 
 }
+
+export default UserRepository;

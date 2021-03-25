@@ -1,9 +1,11 @@
 import { Document } from 'mongoose';
-import { IUser } from './IUser';
+import IUser from './IUser';
 
-export interface IMessage extends Document {
+interface IMessage extends Document {
     messageId: number;
     user: IUser;
     creationDateTime: Date;
     updatedDateTime: Date;
 }
+
+export default IMessage;

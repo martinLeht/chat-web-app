@@ -1,8 +1,12 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
+import { DotenvConfigOutput } from 'dotenv';
 
-dotenv.config();
-let path = `${__dirname}/../../../.env`;
-dotenv.config({ path: path });
-
+let path = `${__dirname}/../../.env`;
+const result: DotenvConfigOutput = dotenv.config({ path: path });
+ 
+if (result.error) {
+    throw result.error
+}
 export const PORT = process.env.PORT;
 export const MONGO_URI = process.env.MONGO_URI;
+console.log(PORT);
