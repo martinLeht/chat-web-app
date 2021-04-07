@@ -1,7 +1,8 @@
 import { Router } from "express";
 
 interface IRoutes {
-    registerRoutes(router: Router): void;
+    registerRoutes(): void;
+    getRouter(): Router;
 }
 
 export default IRoutes;

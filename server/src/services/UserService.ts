@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import TYPES from "../config/types";
 import { UserDTO } from "../dto/UserDTO";
-import { IUser } from "../models/interfaces/IUser";
+import IUser from "../models/interfaces/IUser";
 import User from "../models/User";
 import IUserService from "./interfaces/IUserService";
 import IUserRepository from "../repositories/interfaces/IUserRepository";

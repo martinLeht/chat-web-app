@@ -1,6 +1,4 @@
 import express, { Application, Router, Request, Response } from 'express';
-import { json } from 'body-parser';
-const expressSanitizer = require('express-sanitizer');
 import http, { Server } from 'http';
 import helmet from 'helmet';
 import cors from "cors";
@@ -10,17 +8,13 @@ import { MONGO_URI } from './config/config';
 import { Connection } from 'mongoose';
 import IRoutes from './routes/interfaces/IRoutes';
 
-import { testRouter } from './routes/TestRouter';
-
 export default class App {
 
     public app: Application;
     private server: Server;
-    private router: Router;
 
     constructor(routes: IRoutes[]) {
         this.app = express();
-        this.router = express.Router();
 
         this.initMiddlewares();
         this.initRoutes(routes);
@@ -29,29 +23,22 @@ export default class App {
     }
 
     private initMiddlewares(): void {
-        this.app.use(json());
-        this.app.use(expressSanitizer);
+        this.app.use(express.json());
         this.app.use(cors());
         this.app.use(helmet());
     }
 
     private initRoutes(routes: IRoutes[]): void {
-        /*
         routes.forEach((routes: IRoutes) => {
-            routes.registerRoutes(routerTest);
+            routes.registerRoutes();
+            this.app.use("/api", routes.getRouter());
         });
-        */
-        this.app.use("/api", testRouter);
-        console.log(testRouter)
-        //console.log(this.router.stack);
-        console.log(this.app._router.stack);
-        
     }
 
     private establishDbConnection(): void {
         if (MONGO_URI != undefined) {
             let dbConnection: Connection = MongoDbConnectionService.establishConnection(MONGO_URI);
-            dbConnection.once("open", async () => {
+            dbConnection.once("open", () => {
                 console.log("Connected to database");
             });  
             dbConnection.on("error", () => {
@@ -66,7 +53,7 @@ export default class App {
     public startServer(port: number): void {
         this.server.listen(port ,() => {
             console.log(`Server started listening at localhost: ${port}`);
-            this.establishDbConnection();
+            //this.establishDbConnection();
         });
     }
 }

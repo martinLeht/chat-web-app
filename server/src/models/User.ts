@@ -12,7 +12,7 @@ const UserSchema: Schema = new Schema({
     updatedDateTime: { type: Date }
 });
 
-// Enables autoincrementation to gameId field
+// Enables autoincrementation to userId field
 UserSchema.plugin(AutoIncrement, { id: 'user_id_seq', inc_field: 'userId' });
 
 export default mongoose.model<IUser>('User', UserSchema);
