@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
@@ -26,6 +27,7 @@ import { ExploreComponent } from './components/explore/explore.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 import { UsersOnlineComponent } from './components/users-online/users-online.component';
+import { UserLoginDialogComponent } from './components/user-login-dialog/user-login-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { UsersOnlineComponent } from './components/users-online/users-online.com
     ExploreComponent,
     ProfileComponent,
     ChatWindowComponent,
-    UsersOnlineComponent
+    UsersOnlineComponent,
+    UserLoginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { UsersOnlineComponent } from './components/users-online/users-online.com
     MatCardModule,
     MatGridListModule,
     MatTabsModule,
+    MatDialogModule,
     FormsModule, 
     ReactiveFormsModule
   ],

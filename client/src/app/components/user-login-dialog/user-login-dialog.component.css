@@ -1,0 +1,7 @@
+.common-dialog {
+    border: solid;
+    border-radius: 10px;
+    border-color: rgb(75, 0, 130);
+    padding: 20px;
+    margin: -10px;
+}

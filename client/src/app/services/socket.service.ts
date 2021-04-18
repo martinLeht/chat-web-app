@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as socketIo from 'socket.io';
+import { io } from 'socket.io-client';
 import { Message } from '../model/message';
+import { Event } from '../resources/event';
 
 
-const SERVER_URL = 'http://localhost:8080';
+const SERVER_URL = 'http://localhost:3000';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class SocketService {
   constructor() { }
 
   public initSocket(): void {
-    this.socket = socketIo(SERVER_URL);
+    this.socket = io(SERVER_URL);
   }
 
   public send(msg: Message) {

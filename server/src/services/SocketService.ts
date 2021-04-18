@@ -14,7 +14,7 @@ class SocketService {
     public initSocket(): void {
         this.io.on('connect', (socket: any) => {
             console.log('Connected client');
-            socket.on('message', (m: MessageDTO) => {
+            socket.on('message', (m: any) => {
                 console.log('[server](message): %s', JSON.stringify(m));
                 this.io.emit('message', m);
             });

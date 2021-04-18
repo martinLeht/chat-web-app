@@ -1,0 +1,15 @@
+<div class="common-dialog">
+    <h2 mat-dialog-title>Login and chat</h2>
+    <mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Chat as?</mat-label>
+            <input matInput name="username" placeholder="Username" [formControl]="usernameFormControl" required>
+            <mat-error translate>Field Required</mat-error>
+            <mat-hint translate>Please type your username</mat-hint>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onCancelClick()">Cancel</button>
+        <button mat-button cdkFocusInitial (click)="onTempSignInClick()">Temporary Sign in</button>
+    </mat-dialog-actions>
+</div>

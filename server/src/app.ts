@@ -7,19 +7,26 @@ import MongoDbConnectionService from './services/MongoDbConnectionService';
 import { MONGO_URI } from './config/config';
 import { Connection } from 'mongoose';
 import IRoutes from './routes/interfaces/IRoutes';
+import SocketService from './services/SocketService';
+import { Socket } from 'dgram';
 
 export default class App {
 
     public app: Application;
     private server: Server;
+    private socketService: SocketService;
 
     constructor(routes: IRoutes[]) {
         this.app = express();
 
         this.initMiddlewares();
         this.initRoutes(routes);
+        this.establishDbConnection();
 
         this.server = http.createServer(this.app);
+        
+        this.socketService = new SocketService(this.server);
+        this.socketService.initSocket();
     }
 
     private initMiddlewares(): void {

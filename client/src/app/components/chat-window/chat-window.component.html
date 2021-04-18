@@ -4,20 +4,20 @@
         <mat-card class="chat-messages-window">
             <h2 *ngIf="!isChatting" id="no-chat">No one to chat with</h2>
             <mat-card-content *ngFor="let message of messages" class="chat-messages-content">
-                <div *ngIf="isChatting" [className]="loggedUser === message.user ? 'my-message' : 'incoming-message'">
-                    <h5 id="message-sender">{{message.user}} (sent {{message.time}})</h5>
+                <div *ngIf="isChatting" [className]="user === message.sender ? 'my-message' : 'incoming-message'">
+                    <h5 id="message-sender">{{message.sender}} (sent {{message.creationTime}})</h5>
                     <p id="message-content">
-                        {{message.message}}
+                        {{message.body}}
                     </p>
                 </div>
                 <br>
             </mat-card-content>
         </mat-card>
 
-        <form *ngIf="isChatting" #msg="ngForm" (ngSubmit)="onSubmit(msg)" novalidate>
+        <form *ngIf="isChatting" [formGroup]="messageFormData" (ngSubmit)="sendMessage(messageFormData.value)" novalidate>
             <div class="chat-input-group">   
                 <mat-form-field class="message-input">
-                    <textarea name="text" ngModel matInput placeholder="Send a message"></textarea>
+                    <textarea matInput name="message" formControlName="message" placeholder="Send a message"></textarea>
                 </mat-form-field>
                 <button class="send-button" mat-stroked-button color="primary">
                     <mat-icon>send</mat-icon>
