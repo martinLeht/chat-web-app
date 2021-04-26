@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm} from '@angular/forms';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as uuid from 'uuid';
 import { Message } from 'src/app/model/message';
 import { User } from 'src/app/model/user';
+import { Notification } from 'src/app/model/notification';
 import { SocketService } from 'src/app/services/socket.service';
 import { Action } from '../../resources/action';
 import { Event } from '../../resources/event';
@@ -22,10 +23,11 @@ export class ChatWindowComponent implements OnInit {
   user: User;
   storedUsername: string;
   messages: Message[] = [];
+  notifications: Notification[] = [];
   messageBody: string;
   ioConnection: any;
 
-  messageFormData: FormGroup;
+  messageForm: FormGroup;
   isChatting = true;
 
   dialogRef: MatDialogRef<UserLoginDialogComponent> | null;
@@ -34,9 +36,12 @@ export class ChatWindowComponent implements OnInit {
     private socketService: SocketService,
     private userStoreService: UserStoreService,
     public dialog: MatDialog) {
-      this.messageFormData = new FormGroup({
-        message: new FormControl()
-      });
+    this.messageForm = new FormGroup({
+      message: new FormControl(this.messageBody, [
+        Validators.required,
+        Validators.minLength(1)
+      ])
+    });
   }
 
   ngOnInit() {
@@ -59,9 +64,14 @@ export class ChatWindowComponent implements OnInit {
   private initIoConnection(): void {
     this.socketService.initSocket();
 
-    this.socketService.onMessage()
+    this.ioConnection = this.socketService.onMessage()
       .subscribe((message: Message) => {
         this.messages.push(message);
+    });
+
+    this.socketService.onNotification()
+      .subscribe((notification: Notification) => {
+        this.notifications.push(notification);
     });
 
     this.socketService.onEvent(Event.CONNECT)
@@ -94,37 +104,46 @@ export class ChatWindowComponent implements OnInit {
     });
   }
 
-  public sendMessage(messageData: any): void {
-    if (!messageData && !messageData.message) return;
+  public isLoggedIn(): boolean {
+    if (this.user != null) {
+          
+    }
+    return false;
+  }
 
-    console.log("Message sent --->")
-    console.log(messageData.message);
+  public sendMessage(): void {
+    if (this.messageForm.valid) return;
 
-    this.socketService.send({
+    let message: Message = {
       sender: this.user,
-      body:messageData,
+      body: this.messageForm.get('message').value,
       creationTime: new Date()
-    });
+    };
+
+    this.socketService.sendMessage(message);
+    this.messageForm.reset();
   }
 
   public sendNotification(params: any, action: Action): void {
-    let message: Message;
+    let notification: Notification;
+    let info: string;
 
     if (action === Action.JOINED) {
-      message = {
-        sender: this.user,
-        action: action
-      }
-    } else if (action === Action.RENAME) {
-      message = {
+      info = "joined to the chat";
+      notification = {
+        from: this.user,
         action: action,
-        body: {
-          username: this.user.username,
-          previousUsername: params.previousUsername
-        }
-      }
-
-      this.socketService.send(message);
+        info: info
+      };
+      this.socketService.sendNotification(notification);
+    } else if (action === Action.RENAME) {
+      info = "Changed username to " + this.user.username;
+      notification = {
+        from: this.user,
+        action: action,
+        info: info
+      };
+      this.socketService.sendNotification(notification);
     }
   }
 

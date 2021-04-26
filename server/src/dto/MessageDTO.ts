@@ -1,7 +1,7 @@
 import { UserDTO } from "./UserDTO";
 
 export interface MessageDTO {
-    sender: string;
+    sender: UserDTO;
     body: any;
     creationDateTime?: Date;
     updatedDateTime?: Date;

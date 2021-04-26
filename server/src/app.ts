@@ -21,12 +21,11 @@ export default class App {
 
         this.initMiddlewares();
         this.initRoutes(routes);
-        this.establishDbConnection();
 
         this.server = http.createServer(this.app);
         
         this.socketService = new SocketService(this.server);
-        this.socketService.initSocket();
+        this.socketService.initSockets();
     }
 
     private initMiddlewares(): void {

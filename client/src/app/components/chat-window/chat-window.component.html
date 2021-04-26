@@ -1,25 +1,34 @@
 <mat-card class="chat-card">
-    <mat-card-title class="chat-card-title">Chat</mat-card-title>
+    <mat-card-title class="chat-card-title">Chat with </mat-card-title>
     <mat-card-content class="chat-card-content">
         <mat-card class="chat-messages-window">
-            <h2 *ngIf="!isChatting" id="no-chat">No one to chat with</h2>
-            <mat-card-content *ngFor="let message of messages" class="chat-messages-content">
-                <div *ngIf="isChatting" [className]="user === message.sender ? 'my-message' : 'incoming-message'">
-                    <h5 id="message-sender">{{message.sender}} (sent {{message.creationTime}})</h5>
-                    <p id="message-content">
-                        {{message.body}}
+            <mat-card-content>
+                <div *ngFor="let notification of notifications">
+                    <p mat-line class="chat-notification" *ngIf="notification.action === action.JOINED">
+                        <span> <b>{{notification.from.username}}</b> {{notification.info}} </span>
                     </p>
                 </div>
+                
+                <div class="chat-messages-content" *ngFor="let message of messages">
+                    <div [className]="user.uuid === message.sender.uuid ? 'my-message' : 'incoming-message'">
+                        <h5 id="message-sender">{{message.sender.username}} (sent {{message.creationTime}})</h5>
+                        <p id="message-content">
+                            {{message.body}}
+                        </p>
+                    </div>
+                </div>
+                
                 <br>
             </mat-card-content>
         </mat-card>
 
-        <form *ngIf="isChatting" [formGroup]="messageFormData" (ngSubmit)="sendMessage(messageFormData.value)" novalidate>
-            <div class="chat-input-group">   
+        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()" novalidate>
+            <div class="chat-input-group">
                 <mat-form-field class="message-input">
                     <textarea matInput name="message" formControlName="message" placeholder="Send a message"></textarea>
                 </mat-form-field>
                 <button class="send-button" mat-stroked-button color="primary">
+                    <span>Send</span>
                     <mat-icon>send</mat-icon>
                 </button>    
             </div>
