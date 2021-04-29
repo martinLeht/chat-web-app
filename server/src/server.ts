@@ -6,12 +6,14 @@ import DIContainer from './config/DIContainer';
 import TYPES from './config/types';
 import IRouter from './routes/interfaces/IRoutes';
 import UserRoutes from './routes/UserRoutes';
+import TempUserRoutes from './routes/TempUserRoutes';
 
 const container: Container = new DIContainer().getContainer();
 
 /* Fetch roters from DI container */
 const routes: IRouter[] = [
-    container.get<UserRoutes>(TYPES.UserRoutes)
+    container.get<UserRoutes>(TYPES.UserRoutes),
+    container.get<TempUserRoutes>(TYPES.TempUserRoutes)
 ]
 
 /* Create Application instance with procided routes */

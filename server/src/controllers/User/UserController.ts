@@ -8,7 +8,7 @@ import IUserService from "../../services/interfaces/IUserService";
 
 
 @injectable()
-export default class UserController extends CrudController {
+class UserController extends CrudController {
 
     private userService: IUserService;
 
@@ -105,3 +105,5 @@ export default class UserController extends CrudController {
 
     
 }
+
+export default UserController;

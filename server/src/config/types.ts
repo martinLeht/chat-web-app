@@ -1,12 +1,18 @@
+import ITempUserRepository from "../repositories/interfaces/ITempUserRepository";
+
 let TYPES = {
     /* Routes */
     UserRoutes: Symbol("UserRoutes"),
+    TempUserRoutes: Symbol("TempUserRoutes"),
     /* Controllers */
     UserController: Symbol("UserController"),
+    TempUserController: Symbol("TempUserController"),
     /* Services */
     IUserService: Symbol("IUserService"),
+    ITempUserService: Symbol("ITempUserService"),
     /* Repositories */
-    IUserRepository: Symbol("IUserRepository")
+    IUserRepository: Symbol("IUserRepository"),
+    ITempUserRepository: Symbol("ITempUserRepository")
 };
 
 export default TYPES;

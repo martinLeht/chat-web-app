@@ -2,10 +2,19 @@ import { injectable } from "inversify";
 import IUserRepository from "./interfaces/IUserRepository";
 import User from "../models/User";
 import IUser from "../models/interfaces/IUser";
-import { UserDTO } from "../dto/UserDTO";
 
 @injectable()
 class UserRepository implements IUserRepository {
+    // to avoid compile error for now
+    findOneById(id: string): Promise<IUser | undefined> {
+        throw new Error("Method not implemented.");
+    }
+    update(id: string, item: IUser): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+    delete(id: string): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     
     /**
      * Method to fetch all users
@@ -38,6 +47,7 @@ class UserRepository implements IUserRepository {
      * @return
      *      IUser | undefined that matches the provided id
      */
+    /*
     public async findOneById(id: number): Promise<IUser | undefined> {
         try {
             console.log("Finding user by id...");
@@ -53,6 +63,7 @@ class UserRepository implements IUserRepository {
             return undefined;
         }
     } 
+    */
 
     /**
      * Method to fetch user by email
@@ -144,6 +155,7 @@ class UserRepository implements IUserRepository {
      * @return
      *      A boolean flag, if the update was successfull or not
      */
+    /*
     public async update(id: number, userData: IUser): Promise<boolean> {
         try {
             console.log("Creating a document...");
@@ -161,6 +173,7 @@ class UserRepository implements IUserRepository {
             return false;
         }
     }
+    */
 
     /**
      * Method to delete user entry
@@ -171,6 +184,7 @@ class UserRepository implements IUserRepository {
      * @return
      *      A boolean flag, if deletion was successfull or not
      */
+    /*
     public async delete(id: number): Promise<boolean> {
         try {
             const user: IUser | null = await User.findOneAndDelete({ "userId": id}).exec();
@@ -188,6 +202,7 @@ class UserRepository implements IUserRepository {
             return false;
         }
     }
+    */
 
 }
 

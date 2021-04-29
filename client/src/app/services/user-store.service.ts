@@ -21,4 +21,11 @@ export class UserStoreService {
   public storeUser(username: string): void {
     sessionStorage.setItem("username", username);
   }
+
+  /**
+   * Clear session
+   */
+  public clearSession(): void {
+    sessionStorage.clear();
+  }
 }

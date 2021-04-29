@@ -19,7 +19,7 @@ export class SocketService {
   constructor() { }
 
   public initSocket(): void {
-    this.socket = io(SERVER_URL);
+    this.socket = io(SERVER_URL + '/general');
   }
 
   public sendMessage(msg: Message) {

@@ -1,4 +1,4 @@
-import express, { Application, Router, Request, Response } from 'express';
+import express, { Application } from 'express';
 import http, { Server } from 'http';
 import helmet from 'helmet';
 import cors from "cors";
@@ -8,7 +8,6 @@ import { MONGO_URI } from './config/config';
 import { Connection } from 'mongoose';
 import IRoutes from './routes/interfaces/IRoutes';
 import SocketService from './services/SocketService';
-import { Socket } from 'dgram';
 
 export default class App {
 

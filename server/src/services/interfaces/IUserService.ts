@@ -1,4 +1,3 @@
-import { isUndefined } from "util";
 import { UserDTO } from "../../dto/UserDTO";
 
 interface IUserService {

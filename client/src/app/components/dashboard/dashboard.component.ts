@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { User } from 'src/app/model/user';
+import { Action } from 'src/app/resources/action';
+import { UserStoreService } from 'src/app/services/user-store.service';
+import { UserLoginDialogComponent } from '../user-login-dialog/user-login-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +12,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() {}
+  user: User;
+  dialogRef: MatDialogRef<UserLoginDialogComponent> | null;
+
+  constructor(private userStoreService: UserStoreService,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
+    const loggedUser: string = this.userStoreService.getStoredUser();
+    if (loggedUser !== "") {
+      this.user.username = loggedUser;
+    }
+    setTimeout(() => {
+      this.openUserLoginDialog()
+    }, 0);
+  }
+
+  public openUserLoginDialog(): void {
+    this.dialogRef = this.dialog.open(UserLoginDialogComponent, {
+      data: { username: this.user.username}
+    });
+
+    this.dialogRef.afterClosed().subscribe(paramsDialog => {
+      if (!paramsDialog) {
+        return;
+      }
+      this.user.username = paramsDialog.username;
+      this.userStoreService.storeUser(this.user.username);
+      this.sendNotification(paramsDialog, Action.JOINED);
+    });
   }
 
 }

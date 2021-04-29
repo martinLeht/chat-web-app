@@ -21,14 +21,13 @@ export class ChatWindowComponent implements OnInit {
 
   action = Action;
   user: User;
-  storedUsername: string;
+  chattingWith: User;
   messages: Message[] = [];
   notifications: Notification[] = [];
   messageBody: string;
   ioConnection: any;
 
   messageForm: FormGroup;
-  isChatting = true;
 
   dialogRef: MatDialogRef<UserLoginDialogComponent> | null;
 
@@ -45,20 +44,6 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initUser();
-
-    setTimeout(() => {
-      this.openUserLoginDialog()
-    }, 0);
-  }
-
-
-  private initUser(): void {
-    const tempUuid = uuid.v4();
-
-    this.user = {
-      uuid: tempUuid
-    }
   }
 
   private initIoConnection(): void {
@@ -84,31 +69,6 @@ export class ChatWindowComponent implements OnInit {
         console.log("Disconnected");
     });
 
-  }
-
-  public openUserLoginDialog(): void {
-    this.dialogRef = this.dialog.open(UserLoginDialogComponent, {
-      data: { username: this.user.username}
-    });
-
-    this.dialogRef.afterClosed().subscribe(paramsDialog => {
-      if (!paramsDialog) {
-        return;
-      }
-      this.storedUsername = this.userStoreService.getStoredUser();
-
-      this.user.username = paramsDialog.username;
-      this.userStoreService.storeUser(this.user.username);
-      this.initIoConnection();
-      this.sendNotification(paramsDialog, Action.JOINED);
-    });
-  }
-
-  public isLoggedIn(): boolean {
-    if (this.user != null) {
-          
-    }
-    return false;
   }
 
   public sendMessage(): void {
