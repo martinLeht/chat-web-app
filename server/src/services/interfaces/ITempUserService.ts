@@ -7,6 +7,7 @@ interface ITempUserService {
     createUser(tempUserDto: ITempUserDTO): Promise<any>;
     updateUser(tempUserDto: ITempUserDTO): Promise<boolean>;
     deleteUser(id: string): Promise<boolean>;
+    deleteUserByUsername(username: string): Promise<boolean>
 }
 
 export default ITempUserService;

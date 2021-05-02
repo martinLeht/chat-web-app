@@ -33,7 +33,6 @@ export class ChatWindowComponent implements OnInit {
 
   constructor(
     private socketService: SocketService,
-    private userStoreService: UserStoreService,
     public dialog: MatDialog) {
     this.messageForm = new FormGroup({
       message: new FormControl(this.messageBody, [
@@ -47,9 +46,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   private initIoConnection(): void {
-    this.socketService.initSocket();
-
-    this.ioConnection = this.socketService.onMessage()
+    this.socketService.onMessage()
       .subscribe((message: Message) => {
         this.messages.push(message);
     });
@@ -68,7 +65,6 @@ export class ChatWindowComponent implements OnInit {
       .subscribe(() => {
         console.log("Disconnected");
     });
-
   }
 
   public sendMessage(): void {

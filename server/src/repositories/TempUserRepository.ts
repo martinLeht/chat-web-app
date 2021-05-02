@@ -163,6 +163,33 @@ class TempUserRepository implements ITempUserRepository {
         }
     }
 
+    /**
+     * Method to delete user entry by username
+     * 
+     * @param {string} username
+     *      Id of the user to be deleted
+     * 
+     * @return
+     *      A boolean flag, if deletion was successfull or not
+     */
+    public async deleteByUsername(username: string): Promise<boolean> {
+        try {
+            const user: ITempUser | null = await TempUser.findOneAndDelete({ "username": username}).exec();
+            if (user === null) {
+                console.log("No user found with username " + username);
+                return false;
+            }
+            console.log("Successfully deleted user:");
+            console.log(user);
+            return true;
+
+        } catch(Error) {
+            console.log("ERROR ON CREATION");
+            console.log(Error.message);
+            return false;
+        }
+    }
+
 }
 
 export default TempUserRepository;

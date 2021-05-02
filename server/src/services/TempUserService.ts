@@ -87,6 +87,15 @@ class TempUserService implements ITempUserService {
         return true;
     }
 
+    public async deleteUserByUsername(username: string): Promise<boolean> {
+        const success: boolean = await this.tempUserRepository.deleteByUsername(username);
+
+        if (!success) {
+            return false;
+        }
+        return true;
+    }
+
     private toDto(user: ITempUser): ITempUserDTO {
         const userDto: ITempUserDTO = {
             userId: user.userId,

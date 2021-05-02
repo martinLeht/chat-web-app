@@ -3,27 +3,41 @@ import { Server as HttpServer } from 'http';
 import { IMessageDTO } from '../dto/IMessageDTO';
 import { INotificationDTO } from '../dto/INotificationDTO';
 import ChatSocketHelper from './helpers/ChatSocketHelper';
+import { id, inject, injectable } from 'inversify';
+import ITempUserService from './interfaces/ITempUserService';
+import TYPES from '../config/types';
 
+
+@injectable()
 class SocketService {
 
     private io: Server;
     private ioGeneralNamespace: Namespace;
     private chatSocketHelper: ChatSocketHelper;
+    private tempUserService: ITempUserService;
 
-    constructor(httpServer: HttpServer) {
-        this.io = require("socket.io")(httpServer, {
+    constructor(@inject(TYPES.ITempUserService) tempUserService: ITempUserService) {
+        this.chatSocketHelper = new ChatSocketHelper();
+        this.tempUserService = tempUserService;
+    }
+
+    public initSocketServer(httpServer: HttpServer): void {
+        this.io = new Server(httpServer, {
             cors: {
               origin: "http://localhost:4200",
               methods: ["GET", "POST"]
             }
         });
-
         this.ioGeneralNamespace = this.io.of('/general');
-        this.chatSocketHelper = new ChatSocketHelper();
+        this.initSockets();
     }
 
-    public initSockets(): void {
+    private initSockets(): void {
         this.ioGeneralNamespace.on('connect', (socket: Socket) => {
+            this.ioGeneralNamespace.sockets.forEach((socket: Socket) => {
+                console.log(socket.data.username);
+                console.log(socket.id);
+            });
 
             console.log("Client connected / Username: %s", JSON.stringify(socket.data.username));
 
@@ -35,8 +49,11 @@ class SocketService {
                 this.chatSocketHelper.handleDirectNotification(socket, sendToSocketId, notification)
             );
 
-            socket.on('disconnect', () => {
-                console.log("Client disconnected / Username: %s", JSON.stringify(socket.data.username));
+            socket.on('disconnect', async () => { 
+                const success: boolean = await this.tempUserService.deleteUser(socket.data.userId)
+                if (success) {
+                    console.log("Client disconnected / Username: %s", JSON.stringify(socket.data.username));
+                }
             });
         });
 

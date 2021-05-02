@@ -8,6 +8,7 @@ let TYPES = {
     UserController: Symbol("UserController"),
     TempUserController: Symbol("TempUserController"),
     /* Services */
+    SocketService: Symbol("SocketService"),
     IUserService: Symbol("IUserService"),
     ITempUserService: Symbol("ITempUserService"),
     /* Repositories */

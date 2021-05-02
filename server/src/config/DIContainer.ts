@@ -9,6 +9,7 @@ import TempUserRoutes from '../routes/TempUserRoutes';
 import UserRoutes from '../routes/UserRoutes';
 import ITempUserService from '../services/interfaces/ITempUserService';
 import IUserService from '../services/interfaces/IUserService';
+import SocketService from '../services/SocketService';
 import TempUserService from '../services/TempUserService';
 import UserService from '../services/UserService';
 import TYPES from './types';
@@ -26,17 +27,18 @@ class DIContainer {
     }
 
     private bindRoutes(): void {
-        this.container.bind<UserRoutes>(TYPES.UserRoutes).to(UserRoutes);
+        //this.container.bind<UserRoutes>(TYPES.UserRoutes).to(UserRoutes);
         this.container.bind<TempUserRoutes>(TYPES.TempUserRoutes).to(TempUserRoutes);
     }
 
     private bindControllers(): void {
-        this.container.bind<UserController>(TYPES.UserController).to(UserController);
+        //this.container.bind<UserController>(TYPES.UserController).to(UserController);
         this.container.bind<TempUserController>(TYPES.TempUserController).to(TempUserController);
     }
 
     private bindServices(): void {
-        this.container.bind<IUserService>(TYPES.IUserService).to(UserService);
+        this.container.bind<SocketService>(TYPES.SocketService).to(SocketService);
+        //this.container.bind<IUserService>(TYPES.IUserService).to(UserService);
         this.container.bind<ITempUserService>(TYPES.ITempUserService).to(TempUserService);
     }
 

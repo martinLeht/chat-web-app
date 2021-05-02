@@ -7,7 +7,7 @@ import { Event } from '../resources/event';
 
 
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://localhost:3000/general';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +19,23 @@ export class SocketService {
   constructor() { }
 
   public initSocket(): void {
-    this.socket = io(SERVER_URL + '/general');
+    this.socket = io(SERVER_URL);
   }
 
   public sendMessage(msg: Message) {
     this.socket.emit('message', msg);
   }
 
+  public sendDirectMessage(msg: Message) {
+    this.socket.emit('direct_msg', msg);
+  }
+
   public sendNotification(notification: Notification) {
     this.socket.emit('notification', notification);
+  }
+
+  public sendDirectNotification(notification: Notification) {
+    this.socket.emit('direct_notification', notification);
   }
 
   public onMessage(): Observable<Message> {

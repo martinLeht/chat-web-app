@@ -7,24 +7,35 @@ import MongoDbConnectionService from './services/MongoDbConnectionService';
 import { MONGO_URI } from './config/config';
 import { Connection } from 'mongoose';
 import IRoutes from './routes/interfaces/IRoutes';
+
+import IRouter from './routes/interfaces/IRoutes';
 import SocketService from './services/SocketService';
+import { Container } from 'inversify';
+import DIContainer from './config/DIContainer';
+import TYPES from './config/types';
+import TempUserRoutes from './routes/TempUserRoutes';
 
 export default class App {
 
     public app: Application;
     private server: Server;
-    private socketService: SocketService;
+    private container: Container;
 
-    constructor(routes: IRoutes[]) {
+    constructor() {
         this.app = express();
+        this.container = new DIContainer().getContainer();
 
-        this.initMiddlewares();
+        /* Fetch roters from DI container and initiate to application */
+        const routes: IRouter[] = [
+            this.container.get<TempUserRoutes>(TYPES.TempUserRoutes)
+        ];
         this.initRoutes(routes);
-
-        this.server = http.createServer(this.app);
+        this.initMiddlewares();
         
-        this.socketService = new SocketService(this.server);
-        this.socketService.initSockets();
+        this.server = http.createServer(this.app);
+
+        const socketService: SocketService = this.container.get<SocketService>(TYPES.SocketService);
+        socketService.initSocketServer(this.server);
     }
 
     private initMiddlewares(): void {
