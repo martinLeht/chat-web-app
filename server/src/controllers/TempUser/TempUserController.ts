@@ -43,30 +43,24 @@ class TempUserController extends CrudController {
         });
     }
 
-    public async create(req: Request, res: Response): Promise<void> {
-        const username: string = req.body.userData.username;
-
+    public async create(req: Request, res: Response): Promise<void> {        
+        const username: string = req.body.username;
         if (username === undefined) {
             res.json({
                 err: "You need to provide a username!"
             });
         }
-
-        const TempuserDto: ITempUserDTO = {
+        const tempUserDto: ITempUserDTO = {
             username: username
         };
+        const newUser: ITempUserDTO | undefined = await this.tempUserService.createUser(tempUserDto);
 
-
-        const success: boolean = await this.tempUserService.createUser(TempuserDto);
-
-        if (!success) {
+        if (!newUser) {
             res.json({
                 err: "Something went wrong on creation"
             });
         }
-        res.json({
-            message: "Successfully created a user!"
-        });
+        res.json(newUser);
     }
 
     public async update(req: Request, res: Response): Promise<void> {

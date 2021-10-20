@@ -3,9 +3,9 @@
         <mat-card class="users-card">
             <mat-card-title class="users-card-title">Friends Online</mat-card-title>
             <mat-card-content class="users-card-content">
-                <mat-nav-list>
+                <mat-nav-list *ngIf="isLoggedIn">
                     <mat-list-item *ngFor="let user of getUsers()">
-                        <a matLine href="...">{{ user }}</a>
+                        <a matLine (click)="openChatWithUser(user)">{{ user }}</a>
                         <button mat-icon-button (click)="showDetails(user)">
                             <mat-icon>info</mat-icon>
                         </button>
@@ -14,6 +14,7 @@
             </mat-card-content>
         </mat-card>
     </mat-tab>
+    <!--
     <mat-tab label="Groups"> 
         <mat-card class="users-card">
             <mat-card-title class="users-card-title">Groups Chats</mat-card-title>
@@ -44,4 +45,5 @@
             </mat-card-content>
         </mat-card>
     </mat-tab>
+-->
 </mat-tab-group>

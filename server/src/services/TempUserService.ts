@@ -23,8 +23,6 @@ class TempUserService implements ITempUserService {
         }
 
         const usersDto: ITempUserDTO[] = users.map(user => this.toDto(user));
-        console.log("In service users to dto:");
-        console.log(usersDto);
         return usersDto;
     }
 

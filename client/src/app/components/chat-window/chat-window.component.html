@@ -1,5 +1,5 @@
 <mat-card class="chat-card">
-    <mat-card-title class="chat-card-title">Chat with </mat-card-title>
+    <mat-card-title class="chat-card-title">Chat with {{chattingWithUser}}</mat-card-title>
     <mat-card-content class="chat-card-content">
         <mat-card class="chat-messages-window">
             <mat-card-content>
@@ -10,7 +10,7 @@
                 </div>
                 
                 <div class="chat-messages-content" *ngFor="let message of messages">
-                    <div [className]="user.uuid === message.sender.uuid ? 'my-message' : 'incoming-message'">
+                    <div [className]="user.userId === message.sender ? 'my-message' : 'incoming-message'">
                         <h5 id="message-sender">{{message.sender.username}} (sent {{message.creationTime}})</h5>
                         <p id="message-content">
                             {{message.body}}

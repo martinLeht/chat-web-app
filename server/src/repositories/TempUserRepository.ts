@@ -18,8 +18,6 @@ class TempUserRepository implements ITempUserRepository {
             const users: ITempUser[] = await TempUser.find().exec();
             
             if (users.length === 0) return [];
-
-            console.log(users);
             return users;  
         } catch(Error) {
             console.log("ERROR ON findAll");

@@ -20,28 +20,23 @@ export default class App {
     public app: Application;
     private server: Server;
     private container: Container;
+    private socketService: SocketService;
 
     constructor() {
         this.app = express();
         this.container = new DIContainer().getContainer();
 
+        this.initMiddlewares();
         /* Fetch roters from DI container and initiate to application */
         const routes: IRouter[] = [
             this.container.get<TempUserRoutes>(TYPES.TempUserRoutes)
         ];
         this.initRoutes(routes);
-        this.initMiddlewares();
         
         this.server = http.createServer(this.app);
-
-        const socketService: SocketService = this.container.get<SocketService>(TYPES.SocketService);
-        socketService.initSocketServer(this.server);
-    }
-
-    private initMiddlewares(): void {
-        this.app.use(express.json());
-        this.app.use(cors());
-        this.app.use(helmet());
+        /* Initialize socket communication */
+        this.socketService = this.container.get<SocketService>(TYPES.SocketService);
+        this.socketService.initSocketServer(this.server);
     }
 
     private initRoutes(routes: IRoutes[]): void {
@@ -49,6 +44,12 @@ export default class App {
             routes.registerRoutes();
             this.app.use("/api", routes.getRouter());
         });
+    }
+
+    private initMiddlewares(): void {
+        this.app.use(express.json());
+        this.app.use(cors());
+        this.app.use(helmet());
     }
 
     private establishDbConnection(): void {
@@ -69,7 +70,7 @@ export default class App {
     public startServer(port: number): void {
         this.server.listen(port ,() => {
             console.log(`Server started listening at localhost: ${port}`);
-            //this.establishDbConnection();
+            this.establishDbConnection();
         });
     }
 }

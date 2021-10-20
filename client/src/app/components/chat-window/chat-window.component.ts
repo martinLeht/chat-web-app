@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as uuid from 'uuid';
@@ -19,9 +19,10 @@ import { UserStoreService } from 'src/app/services/user-store.service';
 })
 export class ChatWindowComponent implements OnInit {
 
+  @Input() user: User;
+  @Input() chattingWithUser: User;
+  
   action = Action;
-  user: User;
-  chattingWith: User;
   messages: Message[] = [];
   notifications: Notification[] = [];
   messageBody: string;
@@ -43,28 +44,32 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.user !== undefined) {
+      this.initIoConnection();
+    }
   }
 
   private initIoConnection(): void {
-    this.socketService.onMessage()
-      .subscribe((message: Message) => {
-        this.messages.push(message);
-    });
+      this.socketService.onMessage()
+        .subscribe((message: Message) => {
+          this.messages.push(message);
+      });
 
-    this.socketService.onNotification()
-      .subscribe((notification: Notification) => {
-        this.notifications.push(notification);
-    });
+      this.socketService.onNotification()
+        .subscribe((notification: Notification) => {
+          this.notifications.push(notification);
+      });
 
-    this.socketService.onEvent(Event.CONNECT)
-      .subscribe(() => {
-        console.log("Connected");
-    });
+      this.socketService.onEvent(Event.CONNECT)
+        .subscribe(() => {
+          console.log("Connected");
+      });
 
-    this.socketService.onEvent(Event.DISCONNECT)
-      .subscribe(() => {
-        console.log("Disconnected");
-    });
+      this.socketService.onEvent(Event.DISCONNECT)
+        .subscribe(() => {
+          console.log("Disconnected");
+      });
+    
   }
 
   public sendMessage(): void {
@@ -76,7 +81,7 @@ export class ChatWindowComponent implements OnInit {
       creationTime: new Date()
     };
 
-    this.socketService.sendMessage(message);
+    this.socketService.sendDirectMessage(message);
     this.messageForm.reset();
   }
 
@@ -91,7 +96,7 @@ export class ChatWindowComponent implements OnInit {
         action: action,
         info: info
       };
-      this.socketService.sendNotification(notification);
+      this.socketService.sendDirectNotification(notification);
     } else if (action === Action.RENAME) {
       info = "Changed username to " + this.user.username;
       notification = {
@@ -99,7 +104,7 @@ export class ChatWindowComponent implements OnInit {
         action: action,
         info: info
       };
-      this.socketService.sendNotification(notification);
+      this.socketService.sendDirectNotification(notification);
     }
   }
 

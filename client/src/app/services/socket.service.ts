@@ -3,11 +3,10 @@ import { Observable } from 'rxjs';
 import { io } from 'socket.io-client';
 import { Message } from '../model/message';
 import { Notification } from '../model/notification';
+import { User } from '../model/user';
 import { Event } from '../resources/event';
 
-
-
-const SERVER_URL = 'http://localhost:3000/general';
+const SERVER_URL = 'http://localhost:4200';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +17,14 @@ export class SocketService {
 
   constructor() { }
 
-  public initSocket(): void {
-    this.socket = io(SERVER_URL);
+  public initSocket(user: User): void {
+    console.log("Initialising IO");
+    this.socket = io(SERVER_URL, {
+      auth: { 
+        username: user.username,
+        userId: user.userId 
+      }
+    });
   }
 
   public sendMessage(msg: Message) {
@@ -40,13 +45,13 @@ export class SocketService {
 
   public onMessage(): Observable<Message> {
     return new Observable<Message>(observe => {
-      this.socket.on('message', (data: Message) => observe.next(data));
+      this.socket.on('direct_message', (data: Message) => observe.next(data));
     });
   }
 
   public onNotification(): Observable<Notification> {
     return new Observable<Notification>(observe => {
-      this.socket.on('notification', (data: Notification) => observe.next(data));
+      this.socket.on('direct_notification', (data: Notification) => observe.next(data));
     })
   }
 
